@@ -14,22 +14,22 @@ pipeline {
       }
     }
      
-    stage('Build') {
-      steps {
-	      script{
-       dockerImage = docker.build("arth20/youtube"+":$BUILD_NUMBER")
-      }
-      }
-    }  
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', 'dockerHub' ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
+    stage('Install dependencies') {
+		steps{
+             		sh 'npm install'
+		}
+	}
+		stage('Test') {				
+			  steps{
+				script{
+					
+                        sh 'mocha'
+			}
+			}
+			  
+			
+	}
+     	
 	  
   }
 }
